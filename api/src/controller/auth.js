@@ -14,7 +14,7 @@ exports.login = async (req, res) => {
   const users = await showUserByEmail(email)
 
   // If the user isn't found or the password is incorrect, return an error
-  if (!user || !await bcrypt.compare(password, user.password)) {
+  if (!users || !await bcrypt.compare(password, users.password)) {
     return res.status(401).json({ message: 'Invalid email or password' })
   }
 
