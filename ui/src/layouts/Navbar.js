@@ -8,8 +8,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 function Navbar() {
 
   return (
@@ -18,11 +16,12 @@ function Navbar() {
         <Toolbar disableGutters>
           
           {/* big screen logo */}
-          <FitnessCenterIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <FitnessCenterIcon sx={{ display: { xs: 'none', md: 'flex' }, ml: '90px', mr: '5px', width: 30, height: 30 }} />
           <Typography
             variant="h6"
             noWrap
-            component={Link} to='/'
+            component={Link} 
+            to='/'
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -38,15 +37,15 @@ function Navbar() {
           </Typography>
           
           {/* small screen logo */}
-          <FitnessCenterIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <FitnessCenterIcon sx={{ display: { xs: 'flex', md: 'none' }, ml: '90px', mr: '5px', width: 30, height: 30  }} />
           <Typography
             variant="h5"
             noWrap
-            component={Link} to='/'
+            component={Link} 
+            to='/'
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
               fontFamily: 'impact',
               fontWeight: 700,
               letterSpacing: '.1rem',
@@ -59,13 +58,14 @@ function Navbar() {
           </Typography>
             
           {/* login button */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Button sx={{ p: 0 }}>
-              <Typography color='white' component={Link} to='/login' textDecoration='none'>
+          <Box sx={{ display: { xs: 'flex' }, justifyContent: 'flex-end', flexGrow: 1, mr: '90px'}}>
+            <Button component={Link} to='/login' textDecoration='none'>
+              <Typography color='white' fontWeight='bold'>
                 Login
               </Typography>
             </Button>
           </Box>
+          
         </Toolbar>
       </Container>
     </AppBar>
