@@ -30,7 +30,7 @@ function LoginForm() {
 
       setToken(tokenValue.token)
 
-      routeToHome()
+      routeToDashboard()
       
     } catch (error) {
       console.error(error)
@@ -40,8 +40,8 @@ function LoginForm() {
 
   const navigate = useNavigate()
 
-  const routeToHome = () => {
-    navigate('/')
+  const routeToDashboard = () => {
+    navigate('/dashboard')
     window.location.reload()
   }
 
