@@ -14,11 +14,11 @@ exports.login = async (req, res) => {
   const user = await showUserByEmail(email)
 
   // If the user isn't found or the password is incorrect, return an error
-  if (!user || !await bcrypt.compare(password, users.password)) {
+  if (!user || !await bcrypt.compare(password, user.password)) {
     return res.status(401).json({ message: 'Invalid email or password' })
   }
 
   // Create a JWT and send it back to the client
-  const token = jwt.sign({ id: users.email }, process.env.SECRET_KEY)
+  const token = jwt.sign({ id: user.email }, process.env.SECRET_KEY)
   res.json({ token })
 }
