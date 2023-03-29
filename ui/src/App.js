@@ -1,9 +1,10 @@
 import './App.css'
-import {Routes, Route} from 'react-router-dom'
-import Home from './views/Home'
-import NotFound from './views/NotFound'
+import { Routes, Route } from 'react-router-dom'
+import ThemeContextProvider from './context/themeContext'
 import Layout from './layouts'
-import ThemeContextProvider from './context/themeContext' // currently does not exist
+import NotFound from './views/NotFound'
+import Home from './views/Home'
+import Login from './views/Login'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
+            <Route path="/login" element={<Login/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Route>
         </Routes>
