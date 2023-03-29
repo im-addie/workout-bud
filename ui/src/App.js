@@ -5,6 +5,7 @@ import Layout from './layouts'
 import NotFound from './views/NotFound'
 import Home from './views/Home'
 import Login from './views/Login'
+import RegisterForm from './views/Register'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<RegisterForm/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Route>
         </Routes>
