@@ -11,7 +11,7 @@ exports.login = async (req, res) => {
   const credentials = Buffer.from(authHeader.slice(6), 'base64').toString().split(':')
   const [email, password] = credentials
 
-  const user = await showUserByEmail(email)
+  const users = await showUserByEmail(email)
 
   // If the user isn't found or the password is incorrect, return an error
   if (!user || !await bcrypt.compare(password, user.password)) {
@@ -19,7 +19,11 @@ exports.login = async (req, res) => {
   }
 
   // Create a JWT and send it back to the client
-  const token = jwt.sign({ id: user.email }, process.env.SECRET_KEY)
+  if(!users.id) {
+    throw new Error('No user ID with the key "id" provided. verify that the database schema uses the correct column name.')
+  }
+  
+  const token = jwt.sign({ id: users.id }, process.env.SECRET_KEY)
   res.json({ token })
 }
 
@@ -55,10 +59,14 @@ exports.register = async (req, res) => {
       return res.status(406).json({message: "Password does not contain a number."})
     }
 
-    const user = await createUser(userData)
+    const users = await createUser(userData)
     
     // Create a JWT and send it back to the client
-    const token = jwt.sign({ id: user.user_id }, process.env.SECRET_KEY)
+    if(!users.id) {
+      throw new Error('No user ID with the key "id" provided. verify that the database schema uses the correct column name.')
+    }
+
+    const token = jwt.sign({ id: users.id }, process.env.SECRET_KEY)
     return res.json({ token })
 
   } catch (error) {

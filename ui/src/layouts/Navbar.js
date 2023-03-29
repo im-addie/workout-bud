@@ -1,5 +1,5 @@
-import { React, Fragment, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { React, useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,8 +7,58 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { isUserLoggedIn, getToken } from '../utility/utils';
+import { getUser } from '../utility/api'
 
 function Navbar() {
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [user, setUser] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const navigate = useNavigate()
+
+  const dashboardClick = () => {
+    navigate('/dashboard')
+    setAnchorEl(null);
+  }
+
+  const settingsClick = () => {
+    navigate('/settings')
+    setAnchorEl(null);
+  }
+
+  const LogoutClick = () => {
+    navigate('/logout')
+    setAnchorEl(null);
+  }
+
+  // const name = "Addie"
+
+    // Get user data from API
+    useEffect(() => {
+      // check if the use is logged in
+      if (isUserLoggedIn()) {
+        // get token
+        const token = getToken()
+        // fetch user's data
+        getUser(token)
+          .then((data) => setUser(data))
+          
+          .catch((error) => console.log(error))
+      }
+    
+    }, [])
 
   return (
     <AppBar position="static">
@@ -56,16 +106,50 @@ function Navbar() {
           >
             WORKOUT BUD
           </Typography>
+
+          {/* if user is logged in, show Hey, {username}! */}
+          {isUserLoggedIn() ? 
+          <Box sx={{ display: { xs: 'flex' }, justifyContent: 'flex-end', flexGrow: 1, mr: '90px'}}>
+            <Button
+              sx={{ textTransform: 'none' }}
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+            >
+              <Typography color='white'>
+                Hey, <Box fontWeight='bold' display='inline'>{user?.name}</Box>!
+              </Typography>
+            </Button>
             
-          {/* login button */}
+            {/* show a dropdown menu that would contain: dashboard, settings, and logout */}
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={dashboardClick}>Dashboard</MenuItem>
+              <MenuItem onClick={settingsClick}>Settings</MenuItem>
+              <MenuItem onClick={LogoutClick}>Logout</MenuItem>
+            </Menu>
+          </Box>
+
+          :
+
+          /* if user is NOT logged in, show the login button */
+          /* login button */
           <Box sx={{ display: { xs: 'flex' }, justifyContent: 'flex-end', flexGrow: 1, mr: '90px'}}>
             <Button component={Link} to='/login' textDecoration='none'>
               <Typography color='white' fontWeight='bold'>
                 Login
               </Typography>
             </Button>
-          </Box>
-          
+          </Box> 
+        }
+
         </Toolbar>
       </Container>
     </AppBar>

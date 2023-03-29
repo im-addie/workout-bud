@@ -25,3 +25,8 @@ exports.createUser = async (userData) => {
   const user = await knex('users').select('*').where('id', result[0]).first()
   return user
 }
+
+exports.showUserById = async (userId) => {
+  const user = await knex('users').where('id', userId).first()
+  return user
+}
