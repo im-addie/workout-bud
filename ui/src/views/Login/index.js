@@ -11,18 +11,18 @@ import { setToken } from '../../utility/utils';
 
 function LoginForm() {
 
-  const [usernameValue, setUsernameValue] = useState("")
+  const [emailValue, setEmailValue] = useState("")
   const [passwordValue, setPasswordValue] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
 
   const handleSignIn = async () => {
 
     try {
-      // console.log('username value:', usernameValue)
+      // console.log('email value:', emailValue)
       // console.log('password value:', passwordValue)
   
       const tokenValue = await login({
-        username: usernameValue, 
+        email: emailValue, 
         password: passwordValue
       })
 
@@ -34,7 +34,7 @@ function LoginForm() {
       
     } catch (error) {
       console.error(error)
-      setErrorMsg("Invalid username or password.")
+      setErrorMsg("Invalid email or password.")
     }
   }
 
@@ -81,11 +81,11 @@ function LoginForm() {
               justify="center">
 
               <TextField 
-                label="Username" 
+                label="Email" 
                 variant="filled"
                 sx={{marginBottom: '15px', marginTop: '10px',}}
-                onChange={username => setUsernameValue(username.target.value)}
-                value={usernameValue}
+                onChange={email => setEmailValue(email.target.value)}
+                value={emailValue}
               />
 
               <TextField
