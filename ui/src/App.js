@@ -5,6 +5,7 @@ import Layout from './layouts'
 import NotFound from './views/NotFound'
 import Home from './views/Home'
 import Login from './views/Login'
+import Logout from './views/Logout'
 import RegisterForm from './views/Register'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/logout" element={<Logout/>}/>
             <Route path="/register" element={<RegisterForm/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Route>
