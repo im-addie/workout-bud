@@ -16,14 +16,14 @@ const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:9000'
 export const login = async (data) => {
   
   const {
-    username,
+    email,
     password
   } = data
 
   const response = await fetch(`${baseUrl}/auth/login`, {
     method: "POST",
     headers: new Headers({
-      "Authorization": `Basic ${btoa(`${username}:${password}`)}` //btoa is only deprecated in Node.js not in browser environments!
+      "Authorization": `Basic ${btoa(`${email}:${password}`)}` //btoa is only deprecated in Node.js not in browser environments!
     }),
   })
 
