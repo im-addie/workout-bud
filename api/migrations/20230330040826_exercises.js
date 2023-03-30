@@ -12,7 +12,7 @@ exports.up = function(knex) {
       .notNullable()
     table.enu('muscleGroup', ["Back", "Biceps", "Chest", "Triceps", "Shoulders", "Legs"]).notNullable()
     table.string('name').notNullable()
-    table.string('description').notNullable()
+    table.text('description').notNullable()
     table.string('equipment').notNullable() // if an exercise needs no equipment, just display it as "none"
     table.string('image')
     
