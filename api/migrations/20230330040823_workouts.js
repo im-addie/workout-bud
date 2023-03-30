@@ -3,18 +3,20 @@
  * @returns { Promise<void> }
  */
 exports.up = function(knex) {
-  return knex.schema.createTable('users', function(table) {
-  
+  return knex.schema.createTable('workouts', function(table) {
+    
     table.increments('id')
       .primary()
       .unsigned()
       .unique()
       .notNullable()
-    table.string('name').notNullable()
-    table.string('email').notNullable().unique()
-    table.string('password').notNullable()
-    table.timestamp('dateCreated').notNullable().defaultTo(knex.fn.now())
-    
+    table.integer('user_id')
+      .references('id')
+      .inTable('users')
+      .unsigned()
+      .notNullable()
+    table.date('dateOfWorkout').notNullable()
+  
   })
 };
 
@@ -23,5 +25,5 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('users')
+  return knex.schema.dropTableIfExists('workouts')
 };
