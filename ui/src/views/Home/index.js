@@ -23,12 +23,12 @@ function Home() {
         <Grid
           container
           direction="row"
-          justifyContent="space-between"
+          justifyContent="center"
           alignItems="center"
           spacing={6}
         > 
 
-          <Grid item xs={6} > {/* text */}
+          <Grid item xs={12} md={6}> {/* text */}
             <Box width='500px'>
               
               <Typography variant='h4' fontWeight='bold'> {/* heading text */}
@@ -50,7 +50,7 @@ function Home() {
             </Box>
           </Grid>
 
-          <Grid item xs={6}> {/* workout photo */}
+          <Grid item xs={12} md={6}> {/* workout photo */}
             <Box
               component="img"
               sx={{ width: '525px', height:'300px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.3)', borderRadius: '5px' }}
@@ -66,23 +66,14 @@ function Home() {
       <Grid item >
         <Grid 
           container
-          direction="row"
+          direction="row-reverse"
           justifyContent="space-between"
           alignItems="center"
           mt='50px'
-          spacing={6}
+          spacing={9}
         > 
 
-          <Grid item xs={6} > {/* icons/photos of features */}
-            <Box
-              component="img"
-              sx={{ width: '525px', height:'300px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.3)', borderRadius: '5px' }}
-              alt='workout photo'
-              src='/placeholder.jpeg'
-            />
-          </Grid>
-
-          <Grid item xs={6}> {/* text */}
+          <Grid item xs={12} md={6}> {/* text */}
             <Box width='500px'>
               <Typography variant='h4' fontWeight='bold'> {/* heading text */}
                 Our tools will do the hard work.
@@ -92,6 +83,15 @@ function Home() {
                 With easy to use features, tracking your progress has never been so simple.
               </Typography>
             </Box>
+          </Grid>
+
+          <Grid item xs={12} md={6}> {/* icons/photos of features */}
+            <Box
+              component="img"
+              sx={{ width: '525px', height:'300px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.3)', borderRadius: '5px' }}
+              alt='workout photo'
+              src='/placeholder.jpeg'
+            />
           </Grid>
 
         </Grid>
