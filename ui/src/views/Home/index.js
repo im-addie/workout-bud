@@ -26,16 +26,17 @@ function Home() {
           justifyContent="center"
           alignItems="center"
           spacing={6}
+          align='center'
         > 
 
           <Grid item xs={12} md={6}> {/* text */}
             <Box width='500px'>
               
-              <Typography variant='h4' fontWeight='bold'> {/* heading text */}
+              <Typography variant='h4' fontWeight='bold' sx={{ textAlign: {xs: 'center', md: 'left' } }}> {/* heading text */}
                 Workouts don't have to be alone.
               </Typography>
 
-              <Typography> {/* subtext */}
+              <Typography sx={{ textAlign: {xs: 'center', md: 'left' } }}> {/* subtext */}
                 Need someone to help you with your workouts? Workout Bud helps you track your progress and reach your goals.
               </Typography>
               
@@ -71,15 +72,16 @@ function Home() {
           alignItems="center"
           mt='50px'
           spacing={9}
+          align='center'
         > 
 
           <Grid item xs={12} md={6}> {/* text */}
             <Box width='500px'>
-              <Typography variant='h4' fontWeight='bold'> {/* heading text */}
+              <Typography variant='h4' fontWeight='bold' sx={{ textAlign: {xs: 'center', md: 'left' } }}> {/* heading text */}
                 Our tools will do the hard work.
               </Typography>
 
-              <Typography> {/* subtext */}
+              <Typography sx={{ textAlign: {xs: 'center', md: 'left' } }}> {/* subtext */}
                 With easy to use features, tracking your progress has never been so simple.
               </Typography>
             </Box>
@@ -91,6 +93,7 @@ function Home() {
               sx={{ width: '525px', height:'300px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.3)', borderRadius: '5px' }}
               alt='workout photo'
               src='/placeholder.jpeg'
+              mt='-30px'
             />
           </Grid>
 
