@@ -11,6 +11,7 @@ function Home() {
       direction="column"
       justifyContent="center"
       alignItems="center"
+      mt='50px'
     >
       
       {/* logo */}
@@ -107,7 +108,7 @@ function Home() {
           direction="column"
           justifyContent="center"
           alignItems="center"
-          mt='75px'
+          mt='90px'
         > 
 
           <Grid item xs={12}> {/* text */}
