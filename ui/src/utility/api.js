@@ -119,3 +119,39 @@ export const updatePassword = async(token, data) => {
   
   return responseData
 }
+
+export const getExerciseByMuscle = async (muscle) => {
+
+  const response = await fetch(`http://localhost:9000/exercises/${muscle}`, {
+    method: "GET", 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const responseData = await response.json()
+
+  if (!response.ok) {
+    throw new Error(`Status Code: ${response?.status} - ${responseData?.message}`)
+  }
+  
+  return responseData
+}
+
+export const getExerciseById = async (exerciseId) => {
+
+  const response = await fetch(`http://localhost:9000/exercises/id/${exerciseId}`, {
+    method: "GET", 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const responseData = await response.json()
+
+  if (!response.ok) {
+    throw new Error(`Status Code: ${response?.status} - ${responseData?.message}`)
+  }
+  
+  return responseData
+}
