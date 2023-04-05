@@ -7,6 +7,7 @@ import Home from './views/Home'
 import Login from './views/Login'
 import Logout from './views/Logout'
 import RegisterForm from './views/Register'
+import Dashboard from './views/Dashboard'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/logout" element={<Logout/>}/>
             <Route path="/register" element={<RegisterForm/>}/>
+            <Route path="/dashboard" element={<Dashboard/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Route>
         </Routes>
