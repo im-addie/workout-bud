@@ -14,6 +14,6 @@ exports.showExerciseBymuscle = async (muscleInput) => {
 
 exports.showExerciseById = async (input) => {
 
-  return await knex('exercises').where('id', input)
+  return await knex('exercises').where('id', input).first()
 
 }
