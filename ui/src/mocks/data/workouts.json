@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "user_id": 1,
+    "dateOfWorkout": "March 30, 2023",
+    "loggedExercise": [
+      {
+        "exercise": {
+          "id": 1,
+          "muscleGroup": "Back",
+          "name": "T-Bar row",
+          "description": "description of t bar row",
+          "equipment": "equipment of t bar row",
+          "image": null
+        },
+        "weight": "90 lbs",
+        "reps": 12
+      }
+    ]
+  }
+]
