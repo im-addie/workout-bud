@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect, Fragment } from 'react'
+import { useNavigate } from "react-router-dom"
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
@@ -11,7 +12,7 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { getExerciseByMuscle, getExerciseById } from '../../utility/api'
+import { getExerciseByMuscle, getExerciseById, sendWorkoutData } from '../../utility/api'
 import { Typography } from '@mui/material'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -20,6 +21,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
+import { getToken, isUserLoggedIn } from '../../utility/utils'
 
 function LogWorkout() {
   const oldLoggedExercises = []
@@ -33,6 +35,15 @@ function LogWorkout() {
   const [loggedExercise, setLoggedExercise] = useState([oldLoggedExercises])
   const [data, setData] = useState([])
   const [exerciseData, setExerciseData] = useState([])
+  const [workoutData, setWorkoutData] = useState([])
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isUserLoggedIn()) {
+      navigate('/login')
+    }
+  }, [])
 
   const handleMuscle = (event) => {
     setMuscle(event.target.value)
@@ -42,7 +53,8 @@ function LogWorkout() {
     setExercise(event.target.value) // the value is the exercise's ID
   }
 
-  const formattedDate = moment(date).format("YYYY-DD-MM")
+  const formattedDate = moment(date).format('YYYY-MM-DD')
+  // console.log(formattedDate)
 
   const handleLog = () => {
 
@@ -66,17 +78,26 @@ function LogWorkout() {
 
     if (!exercise) {
       return setErrorMsg('Please select exercise.')
-    } 
+    }
 
     const newData = {
+      exercise_id: exerciseData.id,
       muscleGroup: exerciseData.muscleGroup,
       exercise: exerciseData.name,
       reps: reps,
       weight: weight,
     }
 
-    setLoggedExercise(oldLoggedExercises => ([...oldLoggedExercises, newData]))
+    setLoggedExercise([...loggedExercise, newData])
 
+    setWorkoutData([formattedDate, ...loggedExercise])
+
+  }
+
+  const handleFinish = () => {
+    const token = getToken()
+    sendWorkoutData(token, [formattedDate, ...loggedExercise])
+    navigate('/dashboard')
   }
 
   // gets all the exercises under selected muscle
@@ -303,6 +324,12 @@ function LogWorkout() {
 
               </CardContent>
             </Card>
+
+            <Button variant='contained' size='large' onClick={handleFinish}>
+              <Typography fontWeight='bold'>
+                FINISH
+              </Typography>
+            </Button>
           </Grid>
         }
 

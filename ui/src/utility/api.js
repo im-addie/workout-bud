@@ -65,22 +65,6 @@ export const register = async(data) => {
   return responseData
 }
 
-export const getUserProfile = async (username) => {
-
-  console.log(`${baseUrl}/user/${username}`)
-  const response = await fetch(`${baseUrl}/user/username/${username}`, {
-    method: "GET",
-  })
-
-  const responseData = await response.json()
-
-  if (!response.ok) {
-    throw new Error(`Status Code: ${response?.status} - ${responseData?.message}`)
-  }
-
-  return responseData
-}
-
 export const getUser = async(token) => {
 
   const response = await fetch(`${baseUrl}/user/token`, {
@@ -103,7 +87,7 @@ export const getUser = async(token) => {
 export const updatePassword = async(token, data) => {
 
   const response = await fetch(`${baseUrl}/auth/updatePassword`, {
-    method: "post", 
+    method: "POST", 
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -145,6 +129,26 @@ export const getExerciseById = async (exerciseId) => {
     headers: {
       'Content-Type': 'application/json',
     },
+  })
+
+  const responseData = await response.json()
+
+  if (!response.ok) {
+    throw new Error(`Status Code: ${response?.status} - ${responseData?.message}`)
+  }
+  
+  return responseData
+}
+
+export const sendWorkoutData = async(token, workoutData) => {
+
+  const response = await fetch(`${baseUrl}/workouts`, {
+    method: "POST", 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(workoutData),
   })
 
   const responseData = await response.json()
