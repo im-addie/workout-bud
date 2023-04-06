@@ -1,4 +1,4 @@
-const { showUserByEmail, createUser  } = require('../service/user')
+const { showUserByEmail, createUser, changePassword  } = require('../service/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -79,3 +79,35 @@ exports.register = async (req, res) => {
     return res.status(500).json({message: "Internal Server Error"})
   }
 }
+
+exports.updatePassword = async (req, res) => {   
+
+  try {
+    const userId = req.userId //this is the user's id
+    const {password} = req.body // this is the user's new password 
+      
+    // console.log ('id', id)
+    // console.log('password', password)
+
+    if (password === "" || password === null) {
+      return res.status(406).json({message: "Password was not provided."})
+    }
+
+    if (password.length < 8){
+      return res.status(406).json({message: "Password is too short."})
+    }
+
+    const passwordRegex = new RegExp(/\d/)
+    const passwordHasNumber = passwordRegex.test(password)
+    if (passwordHasNumber === false){
+      return res.status(406).json({message: "Password does not contain a number."})
+    }
+
+    await changePassword(userId, password)
+    return res.json({message: "Password updated successfully."})
+
+  } catch (error) {
+    console.log(error)
+  }
+
+};

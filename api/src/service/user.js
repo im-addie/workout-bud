@@ -27,6 +27,15 @@ exports.createUser = async (userData) => {
   return user
 }
 
+exports.changePassword = async (userId, password) => {
+  const hash = await bcrypt.hash(password, 10)
+  const result = await knex('users').where('id', userId).update({
+    password: hash
+  })
+
+return result
+}
+
 exports.showUserById = async (userId) => {
   const user = await knex('users').where('id', userId).first()
   return user

@@ -86,8 +86,8 @@ export const getUser = async(token) => {
 
 export const updatePassword = async(token, data) => {
 
-  const response = await fetch(`${baseUrl}/auth/updatePassword`, {
-    method: "POST", 
+  const response = await fetch(`${baseUrl}/auth/update-password`, {
+    method: "PUT", 
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
