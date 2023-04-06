@@ -38,6 +38,7 @@ exports.showUserWorkouts = async (userId) => {
     .join('workouts', 'users.id', '=', 'workouts.user_id')
     .join('loggedExercises', 'workouts.id', '=', 'loggedExercises.workout_id')
     .join('exercises', 'loggedExercises.exercise_id', '=', 'exercises.id')
+    .orderBy('dateOfWorkout', 'desc')
     .select('user_id', 'workout_id', 'dateOfWorkout', 'exercise_id', 'muscleGroup', 'exercises.name', 'reps', 'weight')
 
   /*
