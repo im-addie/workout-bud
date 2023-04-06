@@ -15,6 +15,8 @@ exports.up = function(knex) {
       .inTable('users')
       .unsigned()
       .notNullable()
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE')
     table.date('dateOfWorkout').notNullable()
   
   })

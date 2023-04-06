@@ -1,4 +1,4 @@
-const { showAllExercises, showExerciseBymuscle } = require("../service/exercises")
+const { showAllExercises, showExerciseBymuscle, showExerciseById } = require("../service/exercises")
 
 exports.getAllExercises = async (req, res) => {
   
@@ -22,6 +22,26 @@ exports.getExerciseByMuscle = async (req, res) => {
 
     if (result.length === 0) {
       return res.status(400).json({message: `No data available for ${muscleInput}.`})
+    }
+    
+    return res.json(result)
+  
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send("Internal Server Error")
+  }
+}
+
+exports.getExerciseById = async (req, res) => {
+
+  const input = req.params.exerciseId
+  
+  try {
+
+    const result = await showExerciseById(input)
+
+    if (result.length === 0) {
+      return res.status(400).json({message: `No data available for exercise ID ${input}.`})
     }
     
     return res.json(result)

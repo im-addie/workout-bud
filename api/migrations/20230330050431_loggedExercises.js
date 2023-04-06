@@ -15,11 +15,15 @@ exports.up = function(knex) {
       .inTable('workouts')
       .unsigned()
       .notNullable()
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE')
     table.integer('exercise_id')
       .references('id')
       .inTable('exercises')
       .unsigned()
       .notNullable()
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE')
     table.integer('reps') // nullable incase of future additions of exercises without reps
     table.string('weight') // nullable because of workouts that require no weight
   

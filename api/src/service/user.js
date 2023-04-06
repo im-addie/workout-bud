@@ -38,7 +38,8 @@ exports.showUserWorkouts = async (userId) => {
     .join('workouts', 'users.id', '=', 'workouts.user_id')
     .join('loggedExercises', 'workouts.id', '=', 'loggedExercises.workout_id')
     .join('exercises', 'loggedExercises.exercise_id', '=', 'exercises.id')
-    .select('user_id', 'workout_id', 'dateOfWorkout', 'muscleGroup', 'exercises.name', 'reps', 'weight')
+    .orderBy('dateOfWorkout', 'desc')
+    .select('user_id', 'workout_id', 'dateOfWorkout', 'exercise_id', 'muscleGroup', 'exercises.name', 'reps', 'weight')
 
   /*
   
@@ -60,6 +61,7 @@ exports.showUserWorkouts = async (userId) => {
     dateOfWorkout: query.dateOfWorkout,
     loggedExercises: [
       {
+        exercise_id: query.exercise_id,
         muscleGroup: query.muscleGroup,
         name: query.name,
         reps: query.reps,
@@ -87,6 +89,7 @@ exports.showUserWorkouts = async (userId) => {
         dateOfWorkout: dateFormatter(query.dateOfWorkout),
         loggedExercises: [
           {
+            exercise_id: query.exercise_id,
             muscleGroup: query.muscleGroup,
             name: query.name,
             reps: query.reps,
@@ -100,6 +103,7 @@ exports.showUserWorkouts = async (userId) => {
      // push logged exercise data in the loggedExercises array in the element with that index in the results array
     if (index !== -1) {
       result[index].loggedExercises.push({
+        exercise_id: query.exercise_id,
         muscleGroup: query.muscleGroup,
         name: query.name,
         reps: query.reps,
