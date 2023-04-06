@@ -36,6 +36,10 @@ exports.changePassword = async (userId, password) => {
 return result
 }
 
+exports.removeUser = async (userId) => {
+  await knex('users').where('id', userId).del()
+}
+
 exports.showUserById = async (userId) => {
   const user = await knex('users').where('id', userId).first()
   return user
