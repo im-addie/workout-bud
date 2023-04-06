@@ -104,6 +104,25 @@ export const updatePassword = async(token, data) => {
   return responseData
 }
 
+export const deleteAccount = async(token) => {
+
+  const response = await fetch(`${baseUrl}/user/deactivate`, {
+    method: "DELETE", 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  const responseData = await response.json()
+
+  if (!response.ok) {
+    throw new Error(`Status Code: ${response?.status} - ${responseData?.message}`)
+  }
+  
+  return responseData
+}
+
 export const getExerciseByMuscle = async (muscle) => {
 
   const response = await fetch(`http://localhost:9000/exercises/${muscle}`, {

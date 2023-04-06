@@ -4,8 +4,8 @@ import { Card, CardContent, Grid, Typography } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import ListItem from '@mui/material/ListItem'
-import { updatePassword } from '../../utility/api'
-import { getToken, isUserLoggedIn } from '../../utility/utils'
+import { updatePassword, deleteAccount } from '../../utility/api'
+import { clearToken, getToken, isUserLoggedIn } from '../../utility/utils'
 
 function Settings() {
   const [passwordValue, setPasswordValue] = useState("")
@@ -25,7 +25,7 @@ function Settings() {
       }
 
       const token = getToken()
-      const data = {password: passwordValue}
+      const data = { password: passwordValue }
 
       await updatePassword(token, data)
 
@@ -39,13 +39,26 @@ function Settings() {
     }
   }
 
+  const handleDelete = async () => {
+    const token = getToken()
+    deleteAccount(token)
+
+    clearToken()
+
+    routeToHome()
+  }
+
   const routeToDashboard = () => {
     navigate('/dashboard')
-    window.location.reload()
+
+  }
+
+  const routeToHome = () => {
+    navigate('/')
   }
 
   useEffect(() => {
-    if(!isUserLoggedIn()) {
+    if (!isUserLoggedIn()) {
       navigate('/')
     }
 
@@ -66,7 +79,6 @@ function Settings() {
           Settings
         </Typography>
       </Grid>
-
 
       <Card sx={{ borderRadius: '20px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.5)', mt: '10px', width: '400px', height: '400px' }}>
 
@@ -118,6 +130,15 @@ function Settings() {
         </CardContent>
 
       </Card>
+
+      <Grid item mt='20px'>
+        <Button variant='contained' color='error' onClick={() => handleDelete()}>
+          <Typography sx={{ fontSize: '18px', justifySelf: 'center', fontWeight: 'bold' }}>
+            Delete account
+          </Typography>
+        </Button>
+      </Grid>
+
     </Grid>
 
   )

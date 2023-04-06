@@ -1,4 +1,4 @@
-const { showUserById, showUserWorkouts } = require('../service/user')
+const { showUserById, showUserWorkouts, removeUser } = require('../service/user')
 
 exports.getUserByToken = async (req, res) => {
   
@@ -25,6 +25,20 @@ exports.getUserWorkouts = async (req, res) => {
     }
 
     return res.json(result)
+  
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send("Internal Server Error")
+  }
+}
+
+exports.deleteUser = async (req, res) => {
+  
+  try {
+
+    const userId = req.userId
+    
+    return res.json(removeUser(userId))
   
   } catch (error) {
     console.log(error)
