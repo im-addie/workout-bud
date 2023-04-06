@@ -14,6 +14,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { isUserLoggedIn, getToken } from '../../utility/utils'
 import { getUser } from '../../utility/api'
+import EmptyDashboard from './EmptyDashboard'
 
 function Dashboard() {
   const [workoutData, setWorkoutData] = useState([])
@@ -54,6 +55,12 @@ function Dashboard() {
     }
 
   }, [])
+
+  if(workoutData.length === 0){
+    return (
+      <EmptyDashboard />
+    )
+  }
 
   return (
     <Grid
