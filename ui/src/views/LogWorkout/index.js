@@ -64,7 +64,7 @@ function LogWorkout() {
       return setErrorMsg('Please enter date.')
     }
 
-    if (!weight || weight == " lbs") {
+    if (!weight || weight === " lbs") {
       return setErrorMsg('Please enter weight.')
     }
 
@@ -98,6 +98,7 @@ function LogWorkout() {
     const token = getToken()
     sendWorkoutData(token, [formattedDate, ...loggedExercise])
     navigate('/dashboard')
+    window.location.reload()
   }
 
   // gets all the exercises under selected muscle
@@ -291,7 +292,7 @@ function LogWorkout() {
         </Grid>
 
         {loggedExercise.length === 1 ? <div></div> :
-          <Grid item xs={6} ml='150px' width='450px' mt='20px'>
+          <Grid item xs={5} ml='150px' width='450px' mt='20px'>
             <Card>
               <CardContent>
 
@@ -312,7 +313,7 @@ function LogWorkout() {
                     <TableBody>
                       {loggedExercise.slice(1).map((exercise) => (
                         <TableRow key={exercise.id}>
-                          <TableCell component="th" scope="row" width='200px'>{exercise.exercise}</TableCell>
+                          <TableCell component="th" scope="row" width='250px'>{exercise.exercise}</TableCell>
                           <TableCell>{exercise.weight}</TableCell>
                           <TableCell>{exercise.reps}</TableCell>
                         </TableRow>
@@ -325,11 +326,14 @@ function LogWorkout() {
               </CardContent>
             </Card>
 
-            <Button variant='contained' size='large' onClick={handleFinish}>
-              <Typography fontWeight='bold'>
-                FINISH
-              </Typography>
-            </Button>
+            <Box mt='15px'>
+              <Button variant='contained' size='large' onClick={handleFinish}>
+                <Typography fontWeight='bold' fontSize='20px'>
+                  FINISH
+                </Typography>
+              </Button>
+            </Box>
+
           </Grid>
         }
 
