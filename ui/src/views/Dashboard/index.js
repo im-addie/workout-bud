@@ -85,10 +85,10 @@ function Dashboard() {
         </Button>
       </Grid>
     
-      <Grid item xs={7} mt='15px' ml='125px'>
+      <Grid item xs={7} ml='125px'>
 
         {workoutData.map((workout) => (
-        <Card sx={{borderRadius: '15px', boxShadow:'3px 2px 7px rgb(0, 0, 0, 0.3)', mb: '45px'}}>
+        <Card sx={{borderRadius: '15px', boxShadow:'3px 2px 7px rgb(0, 0, 0, 0.3)', mt: '20px'}}>
           <CardContent>
             
             <Typography variant='h6' fontWeight='bold'>
