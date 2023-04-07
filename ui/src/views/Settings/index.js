@@ -59,7 +59,7 @@ function Settings() {
 
   useEffect(() => {
     if (!isUserLoggedIn()) {
-      navigate('/')
+      navigate('/login')
     }
 
   }, [])
