@@ -9,12 +9,12 @@ import Paper from '@mui/material/Paper';
 
 const Footer = () => {
   return (
-    <Box mt='50px'>
-      <Paper sx={{ position: 'sticky', bottom: 0, left: 0, right: 0, mt: 'auto' }} elevation={3}>
+    <Box>
+      <Paper elevation={3}>
 
         <BottomNavigation>
 
-          <Grid sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          <Grid sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px'}}>
 
             <FitnessCenterIcon />
 

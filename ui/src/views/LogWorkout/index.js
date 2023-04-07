@@ -134,6 +134,7 @@ function LogWorkout() {
         justifyContent="flex-start"
         alignItems="flex-start"
         mt='25px'
+        mb='50px'
       >
 
         <Grid item xs={12} ml='150px'>

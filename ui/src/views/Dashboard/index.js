@@ -69,6 +69,7 @@ function Dashboard() {
       justifyContent="flex-start"
       alignItems="flex-start"
       mt='50px'
+      mb='50px'
     >
       
       <Grid item xs={6} ml='125px'>
