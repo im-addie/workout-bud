@@ -70,7 +70,7 @@ function Home() {
               component="img"
               sx={{ width: '525px', height:'300px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.3)', borderRadius: '5px' }}
               alt='workout photo'
-              src='/placeholder.jpeg'
+              src='/photo1.jpg'
             />
           </Grid>
 
@@ -105,8 +105,8 @@ function Home() {
             <Box
               component="img"
               sx={{ width: '525px', height:'300px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.3)', borderRadius: '5px' }}
-              alt='workout photo'
-              src='/placeholder.jpeg'
+              alt='logging page'
+              src='/photo2.jpg'
               mt='-30px'
             />
           </Grid>
