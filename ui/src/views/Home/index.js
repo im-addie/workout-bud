@@ -24,6 +24,7 @@ function Home() {
       justifyContent="center"
       alignItems="center"
       mt='50px'
+      mb='50px'
     >
       
       {/* logo */}
