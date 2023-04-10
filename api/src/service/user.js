@@ -46,7 +46,7 @@ exports.showUserById = async (userId) => {
 }
 
 exports.showUserWorkouts = async (userId) => {
-  const query = await knex('users')
+  const queries = await knex('users')
     .where('user_id', userId)
     .join('workouts', 'users.id', '=', 'workouts.user_id')
     .join('loggedExercises', 'workouts.id', '=', 'loggedExercises.workout_id')
@@ -69,22 +69,22 @@ exports.showUserWorkouts = async (userId) => {
 
   // create an array to store the result
   const result = [{
-    user_id: query.user_id,
-    workout_id: query.workout_id,
-    dateOfWorkout: query.dateOfWorkout,
-    loggedExercises: [
+    user_id: queries.user_id,
+    workout_id: queries.workout_id,
+    dateOfWorkout: queries.dateOfWorkout,
+    loggedExercises: [ // turn this to an empty array, to remove the invalid data, then .shift on line 130 is unnecessary
       {
-        exercise_id: query.exercise_id,
-        muscleGroup: query.muscleGroup,
-        name: query.name,
-        reps: query.reps,
-        weight: query.weight
+        exercise_id: queries.exercise_id,
+        muscleGroup: queries.muscleGroup,
+        name: queries.name,
+        reps: queries.reps,
+        weight: queries.weight
       }
     ]
   }]
 
   // loop through query
-  query.map((query) => {
+  queries.map((query) => {
 
     // Output - get the logged exercise data from the query
     // Input - access to the query
