@@ -24,26 +24,20 @@ import moment from 'moment'
 import { getToken, isUserLoggedIn } from '../../utility/utils'
 
 function LogWorkout() {
-  const oldLoggedExercises = []
 
   const [muscle, setMuscle] = useState('')
   const [exercise, setExercise] = useState('')
-  const [date, setDate] = useState('')
+  const [date, setDate] = useState(moment())
   const [weight, setWeight] = useState('')
   const [reps, setReps] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
-  const [loggedExercise, setLoggedExercise] = useState([oldLoggedExercises])
+  const [loggedExercise, setLoggedExercise] = useState([])
   const [data, setData] = useState([])
   const [exerciseData, setExerciseData] = useState([])
-  const [workoutData, setWorkoutData] = useState([])
-
+ 
+  const formattedDate = moment(date).format('YYYY-MM-DD')
+  // console.log(formattedDate)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!isUserLoggedIn()) {
-      navigate('/login')
-    }
-  }, [])
 
   const handleMuscle = (event) => {
     setMuscle(event.target.value)
@@ -52,9 +46,6 @@ function LogWorkout() {
   const handleExercise = (event) => {
     setExercise(event.target.value) // the value is the exercise's ID
   }
-
-  const formattedDate = moment(date).format('YYYY-MM-DD')
-  // console.log(formattedDate)
 
   const handleLog = () => {
 
@@ -90,16 +81,20 @@ function LogWorkout() {
 
     setLoggedExercise([...loggedExercise, newData])
 
-    setWorkoutData([formattedDate, ...loggedExercise])
-
   }
 
   const handleFinish = () => {
     const token = getToken()
     sendWorkoutData(token, [formattedDate, ...loggedExercise])
     navigate('/dashboard')
-    window.location.reload()
   }
+
+  // checks if the user is logged in, if not they're routed to login page
+  useEffect(() => {
+    if (!isUserLoggedIn()) {
+      navigate('/login')
+    }
+  }, [])
 
   // gets all the exercises under selected muscle
   useEffect(() => {
@@ -150,6 +145,7 @@ function LogWorkout() {
 
             <Grid item xs={2.5}>
               <DatePicker
+                defaultValue={moment()}
                 onChange={(value) => setDate(value)}
               />
             </Grid>
@@ -160,7 +156,7 @@ function LogWorkout() {
                 type="number"
                 variant="outlined"
                 InputProps={{
-                  inputProps: { min: 1 }
+                  inputProps: { min: 0 }
                 }}
                 onChange={weight => setWeight(`${weight.target.value} lbs`)}
                 sx={{ width: '150px' }} />
@@ -292,7 +288,7 @@ function LogWorkout() {
           </Button>
         </Grid>
 
-        {loggedExercise.length === 1 ? <div></div> :
+        {loggedExercise.length < 1 ? <div></div> :
           <Grid item xs={5} ml='150px' width='450px' mt='20px'>
             <Card>
               <CardContent>
@@ -312,7 +308,7 @@ function LogWorkout() {
                     </TableHead>
 
                     <TableBody>
-                      {loggedExercise.slice(1).map((exercise) => (
+                      {loggedExercise.map((exercise) => (
                         <TableRow key={exercise.id}>
                           <TableCell component="th" scope="row" width='250px'>{exercise.exercise}</TableCell>
                           <TableCell>{exercise.weight}</TableCell>

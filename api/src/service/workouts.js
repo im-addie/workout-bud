@@ -10,7 +10,7 @@ exports.addWorkout = async (workoutData, userId, date) => {
 
   // using that newly created workout ID, insert the logged exercise data
     // includes workout id, exercise id, weight, reps
-  const result = await Promise.all(workoutData.map(async (workout) => {
+  await Promise.all(workoutData.map(async (workout) => {
 
     return await knex('loggedExercises').insert(
       {
@@ -20,6 +20,8 @@ exports.addWorkout = async (workoutData, userId, date) => {
         reps: workout.reps
       })
   }))
+
+  const result = await knex('workouts').where('user_id', userId)
 
   return result
 }

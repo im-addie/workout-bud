@@ -2,10 +2,9 @@ const { addWorkout } = require('../service/workouts')
 
 exports.createWorkout = async (req, res) => {
   
-  const workoutData = req.body.slice(2)
+  const workoutData = req.body.slice(1)
   const userId = req.userId
   const date = req.body[0]
-  console.log('workoutData:', req.body)
 
   try {
 
