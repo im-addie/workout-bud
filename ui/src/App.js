@@ -10,7 +10,6 @@ import Login from './views/Login'
 import Logout from './views/Logout'
 import RegisterForm from './views/Register'
 import Settings from './views/Settings'
-import Dashboard from './views/Dashboard'
 import LogWorkout from './views/LogWorkout'
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
               <Route path="/logout" element={<Logout />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/log-workout" element={<LogWorkout />} />
               <Route path="*" element={<NotFound />} />
             </Route>

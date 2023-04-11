@@ -51,7 +51,7 @@ function RegistrationForm() {
   let navigate = useNavigate()
 
   const routeToDashboard = () => {
-    navigate('/dashboard')
+    navigate('/')
     window.location.reload()
   }
   

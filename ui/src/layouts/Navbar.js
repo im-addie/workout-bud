@@ -29,7 +29,7 @@ function Navbar() {
   const navigate = useNavigate()
 
   const dashboardClick = () => {
-    navigate('/dashboard')
+    navigate('/')
     setAnchorEl(null);
   }
 

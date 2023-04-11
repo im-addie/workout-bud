@@ -41,7 +41,7 @@ function LoginForm() {
   const navigate = useNavigate()
 
   const routeToDashboard = () => {
-    navigate('/dashboard')
+    navigate('/')
     window.location.reload()
   }
 

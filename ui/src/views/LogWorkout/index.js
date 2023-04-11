@@ -86,7 +86,7 @@ function LogWorkout() {
   const handleFinish = () => {
     const token = getToken()
     sendWorkoutData(token, [formattedDate, ...loggedExercise])
-    navigate('/dashboard')
+    navigate('/')
   }
 
   // checks if the user is logged in, if not they're routed to login page

@@ -49,7 +49,7 @@ function Settings() {
   }
 
   const routeToDashboard = () => {
-    navigate('/dashboard')
+    navigate('/')
 
   }
 

@@ -1,21 +1,16 @@
 import React from 'react'
-import { useEffect } from 'react'
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { isUserLoggedIn } from '../../utility/utils'
 import { Button, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+import Dashboard from '../Dashboard/index'
 
 function Home() {
 
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if(isUserLoggedIn()) {
-      navigate('/dashboard')
-    }
-
-  }, [])
+  if (isUserLoggedIn()) {
+    return (<Dashboard />)
+  }
 
   return (
     <Grid
