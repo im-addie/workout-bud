@@ -1,3 +1,4 @@
+const { getUserWorkouts } = require('../controller/user')
 const knex = require('../knex')
 const bcrypt = require('bcrypt')
 
@@ -24,4 +25,8 @@ exports.addWorkout = async (workoutData, userId, date) => {
   const result = await knex('workouts').where('user_id', userId)
 
   return result
+}
+
+exports.removeWorkout = async (workoutId) => {
+  return await knex('workouts').where('id', workoutId).del()
 }

@@ -178,3 +178,22 @@ export const sendWorkoutData = async(token, workoutData) => {
   
   return responseData
 }
+
+export const deleteWorkout = async(token, workoutId) => {
+
+  const response = await fetch(`${baseUrl}/workouts/${workoutId}`, {
+    method: "DELETE", 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+
+  const responseData = await response.json()
+
+  if (!response.ok) {
+    throw new Error(`Status Code: ${response?.status} - ${responseData?.message}`)
+  }
+  
+  return responseData
+}

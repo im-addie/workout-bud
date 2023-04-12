@@ -12,13 +12,14 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { isUserLoggedIn, getToken } from '../../utility/utils'
-import { getUser } from '../../utility/api'
+import { getUser, deleteWorkout } from '../../utility/api'
 import EmptyDashboard from './EmptyDashboard'
 
 function Dashboard() {
   const [workoutData, setWorkoutData] = useState([])
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   // Get user data from API
   useEffect(() => {
@@ -53,6 +54,15 @@ function Dashboard() {
     }
 
   }, [])
+
+  const handleDeleteWorkout = (workoutId) => {
+
+    const token = getToken()
+
+    deleteWorkout(token, workoutId)
+
+    window.location.reload()
+  }
 
   if (workoutData.length === 0) {
     return (
@@ -90,20 +100,29 @@ function Dashboard() {
           <Card sx={{ borderRadius: '15px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.3)', mt: '20px' }}>
             <CardContent>
 
-              <Typography variant='h6' fontWeight='bold'>
+              <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
 
-              {/*
-                get all muscle groups within the logged exercises array
-                loop through the logged exercises array (workout.loggedExercises.map)
-                get all the UNIQUE muscle groups of the workout
-                use as title!
-              */}
+                <Grid item>
+                  <Typography variant='h6' fontWeight='bold'>
+                    {/* finds all the unique muscle group values of logged exercises array and uses it as the title */}
+                    {workout.loggedExercises.map((muscle) => (muscle.muscleGroup))
+                      .filter((value, index, self) => self.indexOf(value) === index)
+                      .join(" & ") + " Day"}
+                  </Typography>
+                </Grid>
 
-                {workout.loggedExercises.map((muscle) => (muscle.muscleGroup))
-                  .filter((value, index, self) => self.indexOf(value) === index)
-                  .join(" & ") + " day"}
-                  
-              </Typography>
+                <Grid item>
+                  <Button onClick={() => handleDeleteWorkout(workout.workout_id)}>
+                    <DeleteIcon fontSize='small' />
+                  </Button>
+                </Grid>
+
+              </Grid>
 
               <Typography>
                 {workout.dateOfWorkout}
