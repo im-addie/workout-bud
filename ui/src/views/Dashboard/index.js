@@ -21,19 +21,19 @@ function Dashboard() {
   const [workoutData, setWorkoutData] = useState([])
   const [user, setUser] = useState(null)
 
-  // Get user data from API
+  const navigate = useNavigate()
+
+  // get user data from API
   useEffect(() => {
-    // check if the user is logged in
     if (isUserLoggedIn()) {
-      // get token
       const token = getToken()
-      // fetch user's data
       getUser(token)
         .then((data) => setUser(data))
         .catch((error) => console.log(error))
     }
   }, [])
 
+  // get workout data
   useEffect(() => {
     fetch(`http://localhost:9000/${user?.id}/workouts`)
       .then(response => {
@@ -46,8 +46,7 @@ function Dashboard() {
       .catch(err => err) // return the error
   }, [user])
 
-  const navigate = useNavigate()
-
+  // checks if user is logged in
   useEffect(() => {
     if (!isUserLoggedIn()) {
       navigate('/login')
@@ -55,13 +54,13 @@ function Dashboard() {
 
   }, [])
 
-  const handleDeleteWorkout = (workoutId) => {
-
+  const handleDeleteWorkout = async (workoutId) => {
     const token = getToken()
 
-    deleteWorkout(token, workoutId)
+    const result = await deleteWorkout(token, workoutId)
 
-    window.location.reload()
+    setWorkoutData(result)
+
   }
 
   if (workoutData.length === 0) {
@@ -110,9 +109,11 @@ function Dashboard() {
                 <Grid item>
                   <Typography variant='h6' fontWeight='bold'>
                     {/* finds all the unique muscle group values of logged exercises array and uses it as the title */}
-                    {workout.loggedExercises.map((muscle) => (muscle.muscleGroup))
-                      .filter((value, index, self) => self.indexOf(value) === index)
-                      .slice(0, -1).join(", ") + " and " + workout.loggedExercises.at(-1).muscleGroup}
+                    {workout.loggedExercises.length > 1 ? workout.loggedExercises.map((muscle) => (muscle.muscleGroup))
+                        .filter((value, index, self) => self.indexOf(value) === index)
+                        .slice(0, -1).join(", ") + " and " + workout.loggedExercises.at(-1).muscleGroup + " Day"
+                        :
+                        workout.loggedExercises.map((muscle) => (muscle.muscleGroup) + " Day")}
                   </Typography>
                 </Grid>
 
