@@ -112,7 +112,7 @@ function Dashboard() {
                     {/* finds all the unique muscle group values of logged exercises array and uses it as the title */}
                     {workout.loggedExercises.map((muscle) => (muscle.muscleGroup))
                       .filter((value, index, self) => self.indexOf(value) === index)
-                      .join(" & ") + " Day"}
+                      .slice(0, -1).join(", ") + " and " + workout.loggedExercises.at(-1).muscleGroup}
                   </Typography>
                 </Grid>
 
