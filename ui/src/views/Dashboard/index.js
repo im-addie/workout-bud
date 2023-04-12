@@ -29,16 +29,14 @@ function Dashboard() {
       // fetch user's data
       getUser(token)
         .then((data) => setUser(data))
-        
         .catch((error) => console.log(error))
     }
-  
   }, [])
 
   useEffect(() => {
     fetch(`http://localhost:9000/${user?.id}/workouts`)
       .then(response => {
-        if(!response.ok) {
+        if (!response.ok) {
           throw new Error("Failed to fetch")
         }
         return response.json() // parse the response data
@@ -50,13 +48,13 @@ function Dashboard() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(!isUserLoggedIn()) {
+    if (!isUserLoggedIn()) {
       navigate('/login')
     }
 
   }, [])
 
-  if(workoutData.length === 0){
+  if (workoutData.length === 0) {
     return (
       <EmptyDashboard />
     )
@@ -71,7 +69,7 @@ function Dashboard() {
       mt='50px'
       mb='50px'
     >
-      
+
       <Grid item xs={6} ml='125px'>
         <Typography variant='h4' fontWeight='bold'>
           RECENT ACTIVITY
@@ -85,53 +83,64 @@ function Dashboard() {
           </Typography>
         </Button>
       </Grid>
-    
+
       <Grid item xs={7} ml='125px'>
 
         {workoutData.map((workout) => (
-        <Card sx={{borderRadius: '15px', boxShadow:'3px 2px 7px rgb(0, 0, 0, 0.3)', mt: '20px'}}>
-          <CardContent>
-            
-            <Typography variant='h6' fontWeight='bold'>
-              {workout.loggedExercises[0].muscleGroup}
-            </Typography>
+          <Card sx={{ borderRadius: '15px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.3)', mt: '20px' }}>
+            <CardContent>
 
-            <Typography>
-              {workout.dateOfWorkout}
-            </Typography>
+              <Typography variant='h6' fontWeight='bold'>
 
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell sx={{fontWeight: 'bold'}}>Exercise</TableCell>
-                    <TableCell sx={{fontWeight: 'bold'}}>Weight</TableCell>
-                    <TableCell sx={{fontWeight: 'bold'}}>Reps</TableCell>
-                  </TableRow>
-                </TableHead>
+              {/*
+                get all muscle groups within the logged exercises array
+                loop through the logged exercises array (workout.loggedExercises.map)
+                get all the UNIQUE muscle groups of the workout
+                use as title!
+              */}
 
-                <TableBody>
-                  {workout.loggedExercises.map((exercise) => (
-                    <TableRow
-                      key={exercise.name}
-                    >
-                      <TableCell component="th" scope="row" width='350px'>{exercise.name}</TableCell> 
-                      <TableCell>{exercise.weight}</TableCell>
-                      <TableCell>{exercise.reps}</TableCell>
-                    
+                {workout.loggedExercises.map((muscle) => (muscle.muscleGroup))
+                  .filter((value, index, self) => self.indexOf(value) === index)
+                  .join(" & ") + " day"}
+                  
+              </Typography>
+
+              <Typography>
+                {workout.dateOfWorkout}
+              </Typography>
+
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: 'bold' }}>Exercise</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>Weight</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>Reps</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
+                  </TableHead>
 
-              </Table>
-            </TableContainer>
-          
-          </CardContent>
-        </Card>
+                  <TableBody>
+                    {workout.loggedExercises.map((exercise) => (
+                      <TableRow
+                        key={exercise.name}
+                      >
+                        <TableCell component="th" scope="row" width='350px'>{exercise.name}</TableCell>
+                        <TableCell>{exercise.weight}</TableCell>
+                        <TableCell>{exercise.reps}</TableCell>
+
+                      </TableRow>
+                    ))}
+                  </TableBody>
+
+                </Table>
+              </TableContainer>
+
+            </CardContent>
+          </Card>
         ))}
-      
+
       </Grid>
-    
+
     </Grid>
   )
 }
