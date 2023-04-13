@@ -48,7 +48,6 @@ function LoginForm() {
 
   const routeToDashboard = () => {
     navigate('/')
-    window.location.reload()
   }
 
   return (

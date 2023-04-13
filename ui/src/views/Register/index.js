@@ -60,7 +60,6 @@ function RegistrationForm() {
 
   const routeToDashboard = () => {
     navigate('/')
-    window.location.reload()
   }
   
   return (
