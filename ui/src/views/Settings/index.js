@@ -4,6 +4,10 @@ import { Card, CardContent, Grid, Typography } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import ListItem from '@mui/material/ListItem'
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { updatePassword, deleteAccount } from '../../utility/api'
 import { clearToken, getToken, isUserLoggedIn } from '../../utility/utils'
 
@@ -11,8 +15,13 @@ function Settings() {
   const [passwordValue, setPasswordValue] = useState("")
   const [retypePasswordValue, setRetypePasswordValue] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [showRetypePassword, setShowRetypePassword] = useState(false)
 
   let navigate = useNavigate()
+
+  const handleShowPassword = () => setShowPassword(!showPassword)
+  const handleShowRetypePassword = () => setShowRetypePassword(!showRetypePassword)
 
   const handleSubmit = async () => {
 
@@ -45,16 +54,12 @@ function Settings() {
 
     clearToken()
 
-    routeToHome()
+    routeToDashboard()
   }
 
   const routeToDashboard = () => {
     navigate('/')
 
-  }
-
-  const routeToHome = () => {
-    navigate('/')
   }
 
   useEffect(() => {
@@ -94,22 +99,48 @@ function Settings() {
             justify="center"
           >
 
+            {/* password field */}
             <TextField
               variant="filled"
               label="Password"
-              type="password"
               sx={{ marginBottom: '15px' }}
+              type={showPassword ? "text" : "password"} // if show password is true, the type turns to text. if not, its type is password
               onChange={password => setPasswordValue(password.target.value)}
               value={passwordValue}
+              InputProps={{ // toggle button
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPassword}
+                    >
+                      {showPassword ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
 
+            {/* retype password field */}
             <TextField
               variant="filled"
               label="Re-type password"
-              type="password"
               sx={{ marginBottom: '5px' }}
+              type={showRetypePassword ? "text" : "password"} // if show password is true, the type turns to text. if not, its type is password
               onChange={retypePassword => setRetypePasswordValue(retypePassword.target.value)}
               value={retypePasswordValue}
+              InputProps={{ // toggle button
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowRetypePassword}
+                    >
+                      {showRetypePassword ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
 
             <Typography variant='caption'>Password requirements:
