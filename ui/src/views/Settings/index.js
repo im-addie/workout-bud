@@ -8,6 +8,11 @@ import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import { updatePassword, deleteAccount } from '../../utility/api'
 import { clearToken, getToken, isUserLoggedIn } from '../../utility/utils'
 
@@ -17,8 +22,17 @@ function Settings() {
   const [errorMsg, setErrorMsg] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [showRetypePassword, setShowRetypePassword] = useState(false)
+  const [open, setOpen] = useState(false);
 
   let navigate = useNavigate()
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleShowPassword = () => setShowPassword(!showPassword)
   const handleShowRetypePassword = () => setShowRetypePassword(!showRetypePassword)
@@ -38,7 +52,7 @@ function Settings() {
 
       await updatePassword(token, data)
 
-      routeToDashboard()
+      routeToHome()
 
     } catch (error) {
       console.log('READ THE ERROR HERE:', error)
@@ -54,10 +68,10 @@ function Settings() {
 
     clearToken()
 
-    routeToDashboard()
+    routeToHome()
   }
 
-  const routeToDashboard = () => {
+  const routeToHome = () => {
     navigate('/')
 
   }
@@ -163,11 +177,35 @@ function Settings() {
       </Card>
 
       <Grid item mt='20px'>
-        <Button variant='contained' color='error' onClick={() => handleDelete()}>
+        <Button variant='contained' color='error' onClick={handleClickOpen}>
           <Typography sx={{ fontSize: '18px', justifySelf: 'center', fontWeight: 'bold' }}>
             Delete account
           </Typography>
         </Button>
+
+        {/* pop up that shows up to ask the user if they're sure they want to delete their account */}
+        <Dialog
+          open={open}
+          onClose={handleClose}
+        >
+          <DialogTitle align='center'>
+            Are you sure?
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText width='400px'>
+              Deleting your account will erase all your workout data! This process cannot be undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant='contained' onClick={handleDelete} autoFocus color='error'>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+
       </Grid>
 
     </Grid>
