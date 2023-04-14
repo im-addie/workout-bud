@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from 'react'
 import { Card, CardContent, Grid, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
@@ -34,13 +35,13 @@ function RegistrationForm() {
       // console.log('password value:', passwordValue)
       // console.log('retyped password value:', retypePasswordValue)
 
-      if (passwordValue !== retypePasswordValue){
+      if (passwordValue !== retypePasswordValue) {
         return setErrorMsg('Passwords do not match.')
       }
-      
+
       const tokenValue = await register({
         email: emailValue,
-        name: nameValue, 
+        name: nameValue,
         password: passwordValue
       })
 
@@ -49,10 +50,10 @@ function RegistrationForm() {
       setToken(tokenValue.token)
 
       routeToDashboard()
-      
+
     } catch (error) {
       console.log('READ THE ERROR HERE:', error)
-      if (error){
+      if (error) {
         setErrorMsg(`${error.toString().substr(26)}`)
       }
     }
@@ -61,20 +62,20 @@ function RegistrationForm() {
   const routeToDashboard = () => {
     navigate('/')
   }
-  
+
   return (
-    
-    <Grid 
+
+    <Grid
       container
       direction="row"
       justifyContent="center"
     >
-      <Card sx={{borderRadius: '20px', boxShadow:'3px 2px 7px rgb(0, 0, 0, 0.5)', mt: '35px', width: '400px', height: '600px'}}>
-        
-        <CardContent sx={{display: 'grid', margin: '20px'}}>
+      <Card sx={{ borderRadius: '20px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.5)', mt: '35px', width: '400px', height: '600px' }}>
 
-        <FitnessCenterIcon sx={{display: 'flex', justifySelf: 'center'}} />
-          
+        <CardContent sx={{ display: 'grid', margin: '20px' }}>
+
+          <FitnessCenterIcon sx={{ display: 'flex', justifySelf: 'center' }} />
+
           <Typography
             sx={{
               fontFamily: 'impact',
@@ -84,34 +85,34 @@ function RegistrationForm() {
               color: 'inherit',
               justifySelf: 'center'
             }}
-            > 
-              WORKOUT BUD
+          >
+            WORKOUT BUD
           </Typography>
 
           <Typography variant='h6' fontWeight='bold' mt='10px'>Register</Typography>
-          
+
           <Typography color='red' variant='caption'>{errorMsg}</Typography>
 
-            <Grid 
-              container
-              direction="column"
-              justify="center"
-            >
-              <TextField 
-                variant="filled"
-                label="Email" 
-                sx={{marginBottom: '15px', marginTop: '10px',}}
-                onChange={email => SetEmailValue(email.target.value)}
-                value={emailValue}
-              />
+          <Grid
+            container
+            direction="column"
+            justify="center"
+          >
+            <TextField
+              variant="filled"
+              label="Email"
+              sx={{ marginBottom: '15px', marginTop: '10px', }}
+              onChange={email => SetEmailValue(email.target.value)}
+              value={emailValue}
+            />
 
-              <TextField 
-                variant="filled"
-                label="Name" 
-                sx={{marginBottom: '15px'}}
-                onChange={name => setNameValue(name.target.value)}
-                value={nameValue}
-              />
+            <TextField
+              variant="filled"
+              label="Name"
+              sx={{ marginBottom: '15px' }}
+              onChange={name => setNameValue(name.target.value)}
+              value={nameValue}
+            />
 
             {/* password field */}
             <TextField
@@ -156,31 +157,31 @@ function RegistrationForm() {
                 )
               }}
             />
-              
-              <Typography variant='caption'>Password requirements:
-                <ListItem disablePadding={true} sx={{ display: 'list-item', ml: '10px' }}>8 characters or longer.</ListItem>
-                <ListItem disablePadding={true} sx={{ display: 'list-item', ml: '10px' }}>Contain a number.</ListItem>
-              </Typography>
 
-            </Grid>
-            
-            <Link to={'/login'}>
-              <Typography variant='caption'sx={{color:'grey'}}>
-                Already have an account? Log in here
-              </Typography>
-            </Link>
+            <Typography variant='caption'>Password requirements:
+              <ListItem disablePadding={true} sx={{ display: 'list-item', ml: '10px' }}>8 characters or longer.</ListItem>
+              <ListItem disablePadding={true} sx={{ display: 'list-item', ml: '10px' }}>Contain a number.</ListItem>
+            </Typography>
 
-            <Button 
-              variant="contained" 
-              sx={{width: '90px', mt: '10px', display: 'flex', justifySelf: 'center'}}
-              onClick={() => handleRegister()}
-              >
-                Register
-            </Button>
+          </Grid>
+
+          <Box>
+            <Typography component={Link} to='/login' variant='caption' className='link'>
+              Already have an account? Log in here
+            </Typography>
+          </Box>
+
+          <Button
+            variant="contained"
+            sx={{ width: '90px', mt: '10px', display: 'flex', justifySelf: 'center' }}
+            onClick={() => handleRegister()}
+          >
+            Register
+          </Button>
 
         </CardContent>
-        
-      </Card> 
+
+      </Card>
     </Grid>
 
   )

@@ -8,3 +8,12 @@
   display: none;
   width: 16px;
 }
+
+.link {
+  color: grey;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

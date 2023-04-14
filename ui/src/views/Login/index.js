@@ -118,21 +118,17 @@ function LoginForm() {
           <Box
             sx={{
               display: 'flex',
-              justifySelf: 'center'
+              justifyContent: 'center'
             }}>
 
-            <Link to={'/forgot-password'}>
-              <Typography variant='caption' sx={{ color: 'grey' }}>
-                Forgot password
-              </Typography>
-            </Link>
-
-            <Link to={'/register'}>
-              <Typography variant='caption'
-                sx={{ color: 'grey', ml: '20px' }}>
+              <Typography 
+                component={Link}
+                to='/register'
+                variant='caption'
+                className='link'
+                >
                 Create an account
               </Typography>
-            </Link>
 
           </Box>
 
