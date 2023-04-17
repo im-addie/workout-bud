@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: frontend-winter-2023-group-project
+    name: frontend-workout-bud
     env: static
     buildCommand: cd ui; yarn install --production=false; yarn build
     staticPublishPath: ui/build/
@@ -12,7 +12,7 @@ services:
         source: /*
         destination: /index.html
   - type: web
-    name: backend-winter-2023-group-project
+    name: backend-workout-bud
     plan: free
     env: node
     buildCommand: cd api; yarn
@@ -21,7 +21,7 @@ services:
       paths:
         - api/**/*.js
 databases:
-  - name: database-winter-2023-group-project
+  - name: database-workout-bud
     plan: free
-    databaseName: trivia_db
+    databaseName: workoutbud_db
     ipAllowList: [] # only allow internal connections
