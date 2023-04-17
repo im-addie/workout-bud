@@ -40,6 +40,7 @@ function Navbar() {
 
   const LogoutClick = () => {
     signOut()
+    navigate('/')
     setAnchorEl(null)
   }
 
