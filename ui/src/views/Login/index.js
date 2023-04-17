@@ -1,136 +1,147 @@
 import { Card, CardContent, Grid, Typography } from '@mui/material'
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import Box from '@mui/material/Box';
-import React from 'react'
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from 'react';
-import { login } from '../../utility/api';
-import { setToken } from '../../utility/utils';
+import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import Button from '@mui/material/Button'
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
+import Box from '@mui/material/Box'
+import { Link, useNavigate } from "react-router-dom"
+import { useState, useContext } from 'react'
+import { UserContext } from '../../context/userContext'
 
 function LoginForm() {
 
   const [emailValue, setEmailValue] = useState("")
   const [passwordValue, setPasswordValue] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
 
-  const handleSignIn = async () => {
+  const { signIn } = useContext(UserContext)
 
+  const navigate = useNavigate()
+
+  const handleShowPassword = () => setShowPassword(!showPassword)
+
+  const handleSignIn = async (e) => {
+    e.preventDefault()
     try {
       // console.log('email value:', emailValue)
       // console.log('password value:', passwordValue)
-  
-      const tokenValue = await login({
-        email: emailValue, 
-        password: passwordValue
-      })
 
-      // console.log('token value:', tokenValue.token)
-
-      setToken(tokenValue.token)
+      await signIn(emailValue, passwordValue)
 
       routeToDashboard()
-      
+
     } catch (error) {
       console.error(error)
       setErrorMsg("Invalid email or password.")
     }
   }
 
-  const navigate = useNavigate()
-
   const routeToDashboard = () => {
     navigate('/')
-    window.location.reload()
   }
 
   return (
 
-    <Grid 
+    <Grid
       container
       direction="row"
       justifyContent="center"
     >
-      <Card sx={{borderRadius: '20px', boxShadow:'3px 2px 7px rgb(0, 0, 0, 0.5)', mt: '35px', width: '400px', height: '500px'}}>
-        
-        <CardContent sx={{display: 'grid', margin: '20px'}}>
+      <Card sx={{ borderRadius: '20px', boxShadow: '3px 2px 7px rgb(0, 0, 0, 0.5)', mt: '35px', width: '400px', height: '500px' }}>
 
-          <FitnessCenterIcon sx={{display: 'flex', justifySelf: 'center'}} />
-          
-          <Typography
-            sx={{
-              fontFamily: 'impact',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              fontSize: '26px',
-              color: 'inherit',
-              justifySelf: 'center'
-            }}
-            > 
+        <form onSubmit={handleSignIn}>
+          <CardContent sx={{ display: 'grid', margin: '20px' }}>
+
+            <FitnessCenterIcon sx={{ display: 'flex', justifySelf: 'center' }} />
+
+            <Typography
+              sx={{
+                fontFamily: 'impact',
+                fontWeight: 700,
+                letterSpacing: '.1rem',
+                fontSize: '26px',
+                color: 'inherit',
+                justifySelf: 'center'
+              }}
+            >
               WORKOUT BUD
-          </Typography>
+            </Typography>
 
-          <Typography variant='h6' fontWeight='bold' mt='10px'>Sign in</Typography>
-          
-          <Typography color='red' variant='caption'>{errorMsg}</Typography>
+            <Typography variant='h6' fontWeight='bold' mt='10px'>Sign in</Typography>
 
-            <Grid 
+            <Typography color='red' variant='caption'>{errorMsg}</Typography>
+
+            <Grid
               container
               direction="column"
               justify="center">
 
-              <TextField 
-                label="Email" 
+              <TextField
+                label="Email"
                 variant="filled"
-                sx={{marginBottom: '15px', marginTop: '10px',}}
+                sx={{ marginBottom: '15px', marginTop: '10px' }}
                 onChange={email => setEmailValue(email.target.value)}
                 value={emailValue}
               />
 
               <TextField
-                label="Password"
                 variant="filled"
-                type="password"
-                sx={{marginBottom: '5px'}}
+                label="Password"
+                sx={{ marginBottom: '15px' }}
+                type={showPassword ? "text" : "password"} // if show password is true, the type turns to text. if not, its type is password
                 onChange={password => setPasswordValue(password.target.value)}
                 value={passwordValue}
+                InputProps={{ // toggle button
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleShowPassword}
+                      >
+                        {showPassword ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
             </Grid>
-            
+
             <Box
-              sx={{display: 'flex', 
-              justifySelf: 'center'}}>
+              sx={{
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
 
-              <Link to={'/forgot-password'}>
-                <Typography variant='caption'sx={{color:'grey'}}>
-                  Forgot password
-                </Typography>
-              </Link>
-
-              <Link to={'/register'}>
-                <Typography variant='caption'
-                sx={{color:'grey', ml: '20px'}}>
-                  Create an account
-                </Typography>
-              </Link>
+              <Typography
+                component={Link}
+                to='/register'
+                variant='caption'
+                className='link'
+              >
+                Create an account
+              </Typography>
 
             </Box>
 
-            <Button 
-              variant="contained" 
+            <Button
+              type='submit'
+              variant="contained"
               justify='center'
-               sx={{width: '90px', mt: '10px', display: 'flex', justifySelf: 'center'}}
-              onClick={() => handleSignIn()}
-              >
-                sign in
+              sx={{ width: '90px', mt: '10px', display: 'flex', justifySelf: 'center' }}
+            >
+              sign in
             </Button>
-        
-        </CardContent>
-        
-      </Card> 
+
+          </CardContent>
+        </form>
+
+      </Card>
     </Grid>
-  
+
   )
 }
 

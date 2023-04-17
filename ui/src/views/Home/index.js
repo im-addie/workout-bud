@@ -1,15 +1,17 @@
-import React from 'react'
+import { useContext } from 'react'
 import { Link } from "react-router-dom"
-import { isUserLoggedIn } from '../../utility/utils'
 import { Button, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Dashboard from '../Dashboard/index'
+import { UserContext } from '../../context/userContext'
 
 function Home() {
 
-  if (isUserLoggedIn()) {
-    return (<Dashboard />)
+  const { user } = useContext(UserContext)
+
+  if (user) {
+    return <Dashboard/>
   }
 
   return (
