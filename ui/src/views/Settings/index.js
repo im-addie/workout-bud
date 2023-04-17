@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from "react-router-dom"
 import { Card, CardContent, Grid, Typography } from '@mui/material'
 import TextField from '@mui/material/TextField'
@@ -13,8 +13,9 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { updatePassword, deleteAccount } from '../../utility/api'
-import { clearToken, getToken, isUserLoggedIn } from '../../utility/utils'
+import { updatePassword } from '../../utility/api'
+import { getToken, isUserLoggedIn } from '../../utility/utils'
+import { UserContext } from '../../context/userContext'
 
 function Settings() {
   const [passwordValue, setPasswordValue] = useState("")
@@ -22,7 +23,9 @@ function Settings() {
   const [errorMsg, setErrorMsg] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [showRetypePassword, setShowRetypePassword] = useState(false)
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
+
+  const { removeAccount } = useContext(UserContext)
 
   let navigate = useNavigate()
 
@@ -52,7 +55,7 @@ function Settings() {
 
       await updatePassword(token, data)
 
-      routeToHome()
+      navigate('/')
 
     } catch (error) {
       console.log('READ THE ERROR HERE:', error)
@@ -63,17 +66,8 @@ function Settings() {
   }
 
   const handleDelete = async () => {
-    const token = getToken()
-    deleteAccount(token)
-
-    clearToken()
-
-    routeToHome()
-  }
-
-  const routeToHome = () => {
+    await removeAccount()
     navigate('/')
-
   }
 
   useEffect(() => {
@@ -81,7 +75,7 @@ function Settings() {
       navigate('/login')
     }
 
-  }, [])
+  }, [navigate])
 
   return (
 
