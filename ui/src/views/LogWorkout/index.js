@@ -34,7 +34,7 @@ function LogWorkout() {
   const [loggedExercise, setLoggedExercise] = useState([])
   const [data, setData] = useState([])
   const [exerciseData, setExerciseData] = useState([])
- 
+
   const formattedDate = moment(date).format('YYYY-MM-DD')
   // console.log(formattedDate)
   const navigate = useNavigate()
@@ -76,11 +76,14 @@ function LogWorkout() {
       muscleGroup: exerciseData.muscleGroup,
       exercise: exerciseData.name,
       reps: reps,
-      weight: weight,
+      weight: `${weight} lbs`,
     }
 
     setLoggedExercise([...loggedExercise, newData])
-
+    setWeight('')
+    setReps('')
+    setMuscle('')
+    setExercise('')
   }
 
   const handleFinish = () => {
@@ -94,7 +97,7 @@ function LogWorkout() {
     if (!isUserLoggedIn()) {
       navigate('/login')
     }
-  }, [])
+  }, [navigate])
 
   // gets all the exercises under selected muscle
   useEffect(() => {
@@ -158,7 +161,8 @@ function LogWorkout() {
                 InputProps={{
                   inputProps: { min: 0 }
                 }}
-                onChange={weight => setWeight(`${weight.target.value} lbs`)}
+                value={weight}
+                onChange={e => setWeight(e.target.value)}
                 sx={{ width: '150px' }} />
             </Grid>
 
@@ -170,7 +174,8 @@ function LogWorkout() {
                 InputProps={{
                   inputProps: { min: 1 }
                 }}
-                onChange={reps => setReps(reps.target.value)}
+                value={reps}
+                onChange={e => setReps(e.target.value)}
                 sx={{ width: '100px' }} />
             </Grid>
 
@@ -241,44 +246,45 @@ function LogWorkout() {
 
           </Grid>
         </Grid>
-
-        <Grid item xs={12} mt='20px' ml='150px'>
-          <Grid
-            container
-            direction="column"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-          >
-            <Grid item xs={12}>
-              <Typography variant='h5' fontWeight='bold'>
-                {exerciseData.name}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={12}>
-              {!exerciseData.muscleGroup ? <div></div> :
-                <Typography>
-                  <Box fontWeight='bold' display='inline'>Muscle Group:</Box> {exerciseData.muscleGroup}
+        {!exercise ? null :
+          <Grid item xs={12} mt='20px' ml='150px'>
+            <Grid
+              container
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
+              <Grid item xs={12}>
+                <Typography variant='h5' fontWeight='bold'>
+                  {exerciseData.name}
                 </Typography>
-              }
-            </Grid>
+              </Grid>
 
-            <Grid item xs={12}>
-              {!exerciseData.equipment ? <div></div> :
+              <Grid item xs={12}>
+                {!exerciseData.muscleGroup ? <div></div> :
+                  <Typography>
+                    <Box fontWeight='bold' display='inline'>Muscle Group:</Box> {exerciseData.muscleGroup}
+                  </Typography>
+                }
+              </Grid>
+
+              <Grid item xs={12}>
+                {!exerciseData.equipment ? <div></div> :
+                  <Typography>
+                    <Box fontWeight='bold' display='inline'>Equipment:</Box> {exerciseData.equipment}
+                  </Typography>
+                }
+              </Grid>
+
+              <Grid item xs={12} mr='250px'>
                 <Typography>
-                  <Box fontWeight='bold' display='inline'>Equipment:</Box> {exerciseData.equipment}
+                  {exerciseData.description}
                 </Typography>
-              }
-            </Grid>
+              </Grid>
 
-            <Grid item xs={12} mr='250px'>
-              <Typography>
-                {exerciseData.description}
-              </Typography>
             </Grid>
-
           </Grid>
-        </Grid>
+        }
 
         <Grid item xs={12} mt='20px' ml='150px'>
           <Button variant='contained' size='large' onClick={handleLog}>
