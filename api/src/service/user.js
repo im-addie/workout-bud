@@ -72,7 +72,7 @@ exports.showUserWorkouts = async (userId) => {
     user_id: queries.user_id,
     workout_id: queries.workout_id,
     dateOfWorkout: queries.dateOfWorkout,
-    loggedExercises: [ // turn this to an empty array, to remove the invalid data, then .shift on line 130 is unnecessary
+    loggedExercises: [
       {
         exercise_id: queries.exercise_id,
         muscleGroup: queries.muscleGroup,
