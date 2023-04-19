@@ -23,6 +23,14 @@ function Dashboard() {
 
   const navigate = useNavigate()
 
+  // checks if user is logged in
+  useEffect(() => {
+    if (!isUserLoggedIn()) {
+      navigate('/login')
+    }
+
+  }, [])
+
   // get user data from API
   useEffect(() => {
     if (isUserLoggedIn()) {
@@ -45,14 +53,6 @@ function Dashboard() {
       .then(result => setWorkoutData(result)) // set state when the data received
       .catch(err => err) // return the error
   }, [user])
-
-  // checks if user is logged in
-  useEffect(() => {
-    if (!isUserLoggedIn()) {
-      navigate('/login')
-    }
-
-  }, [])
 
   const handleDeleteWorkout = async (workoutId) => {
     const token = getToken()
