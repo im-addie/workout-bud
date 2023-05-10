@@ -10,7 +10,7 @@ Starting my fitness journey, I had a buddy who helped me. He showed me what exer
 
 ### ✨ Features
 - Exercise database
-  - Contains description, muscle group and equipment neede for each exercise
+  - Contains description, muscle group and equipment needed for each exercise
 - Log workout page
 - Dashboard page
   - Shows recent activity of the user
