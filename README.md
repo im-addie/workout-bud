@@ -1,4 +1,4 @@
-# Workout Bud
+# 💪 Workout Bud
 
 ## 💻 Code Stack
 JavaScript, Node.js, React, Material UI, CSS, Express.js, Knex.js, MySQL database
@@ -37,4 +37,4 @@ Starting my fitness journey, I had a buddy who helped me. He showed me what exer
 2. To start, create an account! Click the login button on the navbar. In this page, it has a link "create an account" which will take you to the register page to create an account!
 
 ## 👩‍💻 Created by Addie
-[Addie's GitHub](https://github.com/im-addie), [LinkedIn](https://www.linkedin.com/in/apasok/), and [Twitter](https://twitter.com/addie8fud)
+Addie's [GitHub](https://github.com/im-addie), [LinkedIn](https://www.linkedin.com/in/apasok/), and [Twitter](https://twitter.com/addie8fud)
