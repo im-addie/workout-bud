@@ -13,7 +13,7 @@ import ListItem from '@mui/material/ListItem'
 import { UserContext } from '../../context/userContext'
 
 function RegistrationForm() {
-  const [emailValue, SetEmailValue] = useState("")
+  const [emailValue, setEmailValue] = useState("")
   const [nameValue, setNameValue] = useState("")
   const [passwordValue, setPasswordValue] = useState("")
   const [retypePasswordValue, setRetypePasswordValue] = useState("")
@@ -96,7 +96,7 @@ function RegistrationForm() {
                 variant="filled"
                 label="Email"
                 sx={{ marginBottom: '15px', marginTop: '10px', }}
-                onChange={email => SetEmailValue(email.target.value)}
+                onChange={email => setEmailValue(email.target.value)}
                 value={emailValue}
               />
 
